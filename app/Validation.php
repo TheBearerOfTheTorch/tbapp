@@ -30,7 +30,7 @@ if(isset($_POST['login']))
         //dealing with the database
         try
         {
-            $stmt = $conn->prepare("SELECT emails,names,passwords,types FROM users WHERE emails=?");
+            $stmt = $conn->prepare("SELECT emails,names,password,types FROM users WHERE emails=?");
             $stmt->bindValue(1,$email);
             $stmt->execute();
 
@@ -38,7 +38,7 @@ if(isset($_POST['login']))
             {
                 while($data = $stmt->fetch(PDO::FETCH_ASSOC))
                 {
-                    $passwordDb = $data['passwords'];
+                    $passwordDb = $data['password'];
                     $usernameDb = $data['names'];
                     $typeDb = $data['types'];
                     $phoneDb = $data['phone'];

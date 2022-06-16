@@ -87,47 +87,54 @@
                                 $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username,$pass);
                                 $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-                                $stmt = $conn->prepare("SELECT * FROM criminals");
+                                $stmt = $conn->prepare("SELECT * FROM patients");
                                 $stmt->execute();
 
                                 if($stmt->rowCount())
                                 {
                                     while($data = $stmt->fetch(PDO::FETCH_ASSOC))
                                     {
-                                        $id = $data['id'];
-                                        $criminalname = $data['criminal_name'];
-                                        $crimetype = $data['crime_type'];
-                                        $aboutcriminal = $data['about_criminal'];
-                                        $height = $data['height'];
-                                        $weight = $data['weight'];
-                                        $photo = $data['criminal_photo'];
-                                        $date = $data['created_at'];
+                                        $name = $data['names'];
+                                        $emails = $data['emails'];
+                                        $location = $data['location'];
+                                        $village = $data['village'];
+                                        $clinicname = $data['clinicname'];
+                                        $approval = $data['approval'];
                         ?>
                     
                         <div class="tab-pane fade show active" style="margin-top:30px;" id="viewitem" role="tabpanel" aria-labelledby="viewitem-tab">
                             <div class="container">
-                                <div class="card">
-                                    <div class="card-header" style="margin-left:340px;margin-right:330px;">
-                                        <h3>criminal details below </h3>
+                                <div class="card" style="margin-left:140px;margin-right:140px;">
+                                    <div class="card-header" style="margin-left:240px;margin-right:230px;">
+                                        <h3>Patient Data Profile </h3>
                                     </div>
-                                    <div class="card-body" style="margin-left:160px;hight:100px;">
-                                        <table bordercolor="#F0F0F0" cellpadding="20px">
-                                            <th>photo</th>
-                                            <th>personal details</th>
-                                            <tr>
-                                                <td style="width:350px;"><img src="<?php echo "../app/uploads/$photo" ?>" height="140px" width="190px"></td>
-                                                <td style="width:350px;">
-                                                    <b>Id:</b> <?php echo $id;?> <br>
-                                                    <b>name:</b> <?php echo $criminalname;?><br>
-                                                    <b>crime type:</b> <?php echo $crimetype;?><br>
-                                                    <b>about criminal:</b> <?php echo $aboutcriminal;?><br>
-                                                    <b>height:</b> <?php echo $height?><br>
-                                                    <b>weight:</b> <?php echo $weight?><br>
-                                                    <b>date of conviction:</b> <?php echo $date?><br>
-                                                </td>
-                                            </tr>
-                                            <br>
-                                            </table>
+                                    <div class="card-body" style="margin-left:270px;hight:100px;">
+                                        <b>Name:</b> <?php echo $name;?><br>
+                                        <b>Emails:</b> <?php echo $emails;?><br>
+                                        <b>Location:</b> <?php echo $location?><br>
+                                        <b>Village:</b> <?php echo $village?><br>
+                                        <b>Clinic name:</b> <?php 
+                                        if(empty($clinicname)){
+                                            echo "Clinic Registration Pending";
+                                        }
+                                        else{
+                                            echo $clinicname;
+                                        }
+                                        ?><br>
+                                        <b>Approved by clinic:</b> <?php 
+                                        if(!empty($approval)){
+                                            ?>
+                                            <H2 style="color: red" >
+                                                <?php
+                                                echo "Not Registered";
+                                                ?>
+                                            </H2>
+                                            <?php
+                                        }
+                                        else{
+                                            echo $approval;
+                                        }
+                                        ?><br>
                                     </div>
                                 </div>
                             </div> 
